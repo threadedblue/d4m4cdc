@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>edu.mit.ll</groupId>
+	<artifactId>graphulo</artifactId>
+	<version>3.2.0</version>
+	<packaging>jar</packaging>
+	<name>Graphulo</name>
+	<!-- <description>
+    Graphulo: Accumulo library of matrix math primitives and graph algorithms.
+  </description> -->
+	<url>http://graphulo.mit.edu/</url>
+	<organization>
+		<name>MIT Lincoln Laboratory</name>
+		<url>https://www.ll.mit.edu/</url>
+	</organization>
+	<inceptionYear>2014</inceptionYear>
+	<!-- <scm>
+		<url>https://github.com/Accla/graphulo</url>
+		<connection>scm:git:git@github.com:Accla/graphulo.git</connection>
+		<developerConnection>scm:git:git@github.com:Accla/graphulo.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm> -->
+	<developers>
+		<developer>
+			<id>shutchis</id>
+			<name>Shana Hutchison</name>
+			<email>shutchis@cs.washington.edu</email>
+			<url>http://db.cs.washington.edu/people.html</url>
+			<organization>University of Washington</organization>
+			<organizationUrl>https://www.cs.washington.edu/</organizationUrl>
+		</developer>
+	</developers>
+
+	<properties>
+		<DBinit.path.libextFolder>libext/</DBinit.path.libextFolder>
+		<DBinit.path.mpath>${basedir}/src/assembly/build_DBinit/build_DBinit.m</DBinit.path.mpath>
+		<DBinit.path.outputFile>DBinit.m</DBinit.path.outputFile>
+		<DBinit.path.libextZip>graphulo-${project.version}-libext</DBinit.path.libextZip>
+		<test>TEST_CONFIG</test>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<accumulo.version>2.0.0</accumulo.version>
+		<accumulo.version.majorminor>2.0</accumulo.version.majorminor>
+		<hadoop.version>3.2.0</hadoop.version>
+		<htrace.version>3.1.0-incubating</htrace.version>
+		<json.version>chargebee-1.0</json.version>
+		<collections4.version>4.1</collections4.version>
+	</properties>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>13</source>
+					<target>13</target>
+					<!--<compilerArgument>-Xlint:all</compilerArgument> -->
+					<!--<showWarnings>true</showWarnings> -->
+					<!--<showDeprecation>true</showDeprecation> -->
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.6.1</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>shippable</directory>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.accumulo</groupId>
+			<artifactId>accumulo-core</artifactId>
+			<version>${accumulo.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-common</artifactId>
+			<version>${hadoop.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.accumulo</groupId>
+			<artifactId>accumulo-minicluster</artifactId>
+			<version>${accumulo.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Replaces Accumulo dependency on Apache Commons 3.2, which does not 
+			use Java Generics. -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>${collections4.version}</version>
+		</dependency>
+
+		<!-- Used by some JSON functions in D4M Matlab. -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>org.json</artifactId>
+			<version>${json.version}</version>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- Upgrading to 4.2.0-incubating is impossible without upgrading Zipkin 
+			inside Accumulo. -->
+		<dependency>
+			<groupId>org.apache.htrace</groupId>
+			<artifactId>htrace-zipkin</artifactId>
+			<version>${htrace.version}</version>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>com.googlecode.matrix-toolkits-java</groupId>
+			<artifactId>mtj</artifactId>
+			<version>1.0.4</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.10</version>
+		</dependency>
+		<!-- MySQL connector jar -->
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.48</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+	</dependencies>
+
+</project>

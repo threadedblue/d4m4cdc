@@ -1,0 +1,4 @@
+creds:
+  instance: accumulo
+  user: haz
+  password: haz
